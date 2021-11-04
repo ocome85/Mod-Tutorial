@@ -24,13 +24,14 @@ import org.apache.logging.log4j.Logger;
 import java.util.stream.Collectors;
 
 @net.minecraftforge.fml.common.Mod("tutorial")
-public class Mod
+public class TutorialMod
 {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
     public static  final CreativeModeTab MOD_TAB = new CreativeTab("tutorial");
+    public static final String MOD_ID = "tutorial";
 
-    public Mod() {
+    public TutorialMod() {
 
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         // Register the setup method for modloading
