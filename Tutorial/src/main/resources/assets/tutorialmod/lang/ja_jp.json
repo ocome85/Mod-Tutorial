@@ -1,4 +1,11 @@
 {
-"itemGroup.tutorial": "チュートリアルMod",
-  "item.tutorial.tutorial_t": "チュートリアルのT"
+  "$comment": "コメント",
+  "itemGroup.tutorialmod" : "Tutorial Mod",
+  "item.tutorialmod.tutorial_t" : "TutorialのT",
+  "item.tutorialmod.tutorial_t2" : "TutorialのT2",
+  "item.tutorialmod.tutorial_t2.desc" : "Tutorial T2 の説明",
+  "item.tutorialmod.strawberry" : "いちご",
+  "item.tutorialmod.strawberry.desc" : "いちごは野菜"
+
+
 }

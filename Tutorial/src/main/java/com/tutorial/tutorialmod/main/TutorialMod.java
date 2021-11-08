@@ -23,13 +23,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.stream.Collectors;
 
-@net.minecraftforge.fml.common.Mod("tutorial")
+@net.minecraftforge.fml.common.Mod("tutorialmod")
 public class TutorialMod
 {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
-    public static  final CreativeModeTab MOD_TAB = new CreativeTab("tutorial");
-    public static final String MOD_ID = "tutorial";
+    public static  final CreativeModeTab MOD_TAB = new CreativeTab("tutorialmod");
+    public static final String MOD_ID = "tutorialmod";
 
     public TutorialMod() {
 

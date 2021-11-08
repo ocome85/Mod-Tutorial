@@ -1,4 +1,9 @@
 {
-  "itemGroup.tutorial": "Tutorial Mod",
-  "item.tutorial.tutorial_t": "Tutorial T"
+  "itemGroup.tutorialmod" : "Tutorial Mod",
+  "item.tutorialmod.tutorial_t" : "Tutorial T",
+  "item.tutorialmod.tutorial_t2" : "Tutorial T2",
+  "item.tutorialmod.tutorial_t2.desc" : "Tutorial T2 description",
+  "item.tutorialmod.strawberry" : "Strawberry",
+  "item.tutorialmod.strawberry.desc" : "This is Strawberry"
+
 }
