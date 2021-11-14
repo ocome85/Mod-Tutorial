@@ -17,10 +17,13 @@ public class Strawberry extends Item {
     public Strawberry() {
         super(new Properties().tab(TutorialMod.MOD_TAB)
                 .food(new FoodProperties.Builder()
-                        .nutrition(3)
-                        .saturationMod(0.6F)
+                        .nutrition(3) // 満腹度
+                        .saturationMod(0.6F) //0.6F = 1.2栄養価
+                        //隠し満腹度 = nutrition * saturationMod(F)*2
+                        //carrot = 3.6隠し満腹度
                         .fast()
                         .effect(new MobEffectInstance(MobEffects.REGENERATION,200,1),1F)
+                                                                                                                          // =20=1s         //1=2level      //1F =100%
                         .build())
                 );
         this.setRegistryName("strawberry");
