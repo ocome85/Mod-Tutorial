@@ -32,7 +32,9 @@ public class TutorialMod
     public static final String MOD_ID = "tutorialmod";
 
     public TutorialMod() {
-
+        /*
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ModGenerate::ModGenerate);
+*/
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         // Register the setup method for modloading
         eventBus.addListener(this::setup);

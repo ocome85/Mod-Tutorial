@@ -5,5 +5,7 @@
   "item.tutorialmod.tutorial_t2.desc" : "Tutorial T2 description",
   "item.tutorialmod.strawberry" : "Strawberry",
   "item.tutorialmod.strawberry.desc" : "This is Strawberry"
+  "item.tutorialmod.zone" : "Zone",
+  "item.tutorialmod.zone.desc" : "Zone Drink"
 
 }

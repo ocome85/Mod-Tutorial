@@ -5,7 +5,9 @@
   "item.tutorialmod.tutorial_t2" : "TutorialのT2",
   "item.tutorialmod.tutorial_t2.desc" : "Tutorial T2 の説明",
   "item.tutorialmod.strawberry" : "いちご",
-  "item.tutorialmod.strawberry.desc" : "いちごは野菜"
+  "item.tutorialmod.strawberry.desc" : "いちごは野菜",
+  "item.tutorialmod.zone" : "Zone",
+  "item.tutorialmod.zone.desc" : "Zone Drink"
 
 
 }
