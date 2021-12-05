@@ -8,7 +8,8 @@ import net.minecraft.world.level.levelgen.placement.*;
 import java.util.List;
 
 public class ModOrePlacements {
-    public static final PlacedFeature TUTORIAL_BLOCK= PlacementUtils.register("tutorial_block", ModOreFeatures.TUTORIAL_BLOCK.placed(commonOrePlacement(50, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(180)))));
+    public static final PlacedFeature TUTORIAL_BLOCK= PlacementUtils.register("tutorial_block", ModOreFeatures.TUTORIAL_BLOCK.placed(commonOrePlacement
+            (50, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(180)))));
 
 
     private static List<PlacementModifier> orePlacement(PlacementModifier p_195347_, PlacementModifier p_195348_) {

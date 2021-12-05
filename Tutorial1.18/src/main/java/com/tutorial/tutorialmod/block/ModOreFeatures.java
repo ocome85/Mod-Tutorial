@@ -13,9 +13,13 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 
 import java.util.List;
 
+import static net.minecraft.data.worldgen.features.OreFeatures.STONE_ORE_REPLACEABLES;
+
 public class ModOreFeatures {
-    public static final RuleTest STONE_ORE_REPLACEABLES = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
-    public static final List<OreConfiguration.TargetBlockState> ORE_DIAMOND_TARGET_LIST = List.of(OreConfiguration.target(STONE_ORE_REPLACEABLES, ModBlocks.TUTORIAL_BLOCK.defaultBlockState()));
-    public static final ConfiguredFeature<?, ?> TUTORIAL_BLOCK = FeatureUtils.register("tutorial_block", Feature.ORE.configured(new OreConfiguration(ORE_DIAMOND_TARGET_LIST, 10, 0.5F)));
+
+    public static final List<OreConfiguration.TargetBlockState> TUTORIALBLOCK_LIST =
+            List.of(OreConfiguration.target(STONE_ORE_REPLACEABLES, ModBlocks.TUTORIAL_BLOCK.defaultBlockState()));
+    public static final ConfiguredFeature<?, ?> TUTORIAL_BLOCK =
+            FeatureUtils.register("tutorial_block", Feature.ORE.configured(new OreConfiguration(TUTORIALBLOCK_LIST, 10, 0.5F)));
     }
 

@@ -50,7 +50,8 @@ public class TutorialMod
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        // some preinit code
+        ModEntityRenderers.init();
+        // some preinit c   ode
         LOGGER.info("HELLO FROM PREINIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
@@ -64,6 +65,7 @@ public class TutorialMod
    }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
+    //1.17 public void onServerStarting(FMLServerStartingEvent event) {
     public void onServerStarting(ServerStartingEvent event) {
         // do something when the server starts
         LOGGER.info("HELLO from server starting");
