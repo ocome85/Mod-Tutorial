@@ -3,7 +3,12 @@ package com.tutorial.tutorialmod.main;
 import com.tutorial.tutorialmod.item.Strawberry;
 import com.tutorial.tutorialmod.item.Tutorial_T2;
 import com.tutorial.tutorialmod.item.Zone;
+import com.tutorial.tutorialmod.mobdata.TutorialBoat.TutorialBoat;
+import com.tutorial.tutorialmod.mobdata.TutorialBoat.TutorialBoatItem;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BoatItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,13 +21,16 @@ import net.minecraftforge.registries.ObjectHolder;
 
 public class ModItems {
    public static final Item TUTORIAL_T = new Item((new Item.Properties()).tab(TutorialMod.MOD_TAB));
+    public static final Item TUTORIAL_BOAT = new TutorialBoatItem(TutorialBoat.Type.OAK, (new Item.Properties()).stacksTo(1).tab(TutorialMod.MOD_TAB));
 
     @SubscribeEvent
     public static void  registerItem(RegistryEvent.Register<Item> event){
         event.getRegistry().register(TUTORIAL_T.setRegistryName("tutorial_t"));
+        event.getRegistry().register(TUTORIAL_BOAT.setRegistryName("tutorial_boat"));
         event.getRegistry().register(new Tutorial_T2());
         event.getRegistry().register(new Strawberry());
         event.getRegistry().register(new Zone());
+
     }
 
     public static void register(RegistryEvent.Register<Item> registry, Item item) {

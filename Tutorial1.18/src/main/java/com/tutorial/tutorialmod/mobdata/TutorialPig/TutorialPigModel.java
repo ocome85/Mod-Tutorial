@@ -8,7 +8,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+
 public class TutorialPigModel<T extends TutorialPig> extends QuadrupedModel<T> {
     public TutorialPigModel(ModelPart p_170799_) {
             super(p_170799_, false, 4.0F, 4.0F, 2.0F, 2.0F, 24);
