@@ -1,4 +1,4 @@
-package com.tutorial.tutorialmod.mobdata.TutorialPig;
+package com.tutorial.tutorialmod.mobdata.creature.TutorialPig;
 
 import javax.annotation.Nullable;
 

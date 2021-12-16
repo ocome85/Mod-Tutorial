@@ -1,4 +1,4 @@
-package com.tutorial.tutorialmod.mobdata.TutorialPig;
+package com.tutorial.tutorialmod.mobdata.creature.TutorialPig;
 
 import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.QuadrupedModel;

@@ -1,4 +1,4 @@
-package com.tutorial.tutorialmod.mobdata.TutorialHorse;
+package com.tutorial.tutorialmod.mobdata.creature.TutorialHorse;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;

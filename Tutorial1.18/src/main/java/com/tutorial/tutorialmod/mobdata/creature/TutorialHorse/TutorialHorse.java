@@ -1,4 +1,4 @@
-package com.tutorial.tutorialmod.mobdata.TutorialHorse;
+package com.tutorial.tutorialmod.mobdata.creature.TutorialHorse;
 
 import com.tutorial.tutorialmod.main.ModEntityType;
 import net.minecraft.core.BlockPos;

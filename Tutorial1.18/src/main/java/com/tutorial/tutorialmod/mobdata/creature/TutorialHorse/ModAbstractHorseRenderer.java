@@ -1,4 +1,4 @@
-package com.tutorial.tutorialmod.mobdata.TutorialHorse;
+package com.tutorial.tutorialmod.mobdata.creature.TutorialHorse;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.HorseModel;

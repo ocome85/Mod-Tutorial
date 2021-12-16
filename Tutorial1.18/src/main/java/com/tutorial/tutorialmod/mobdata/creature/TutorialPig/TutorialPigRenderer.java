@@ -1,4 +1,4 @@
-package com.tutorial.tutorialmod.mobdata.TutorialPig;
+package com.tutorial.tutorialmod.mobdata.creature.TutorialPig;
 
 import com.tutorial.tutorialmod.main.ModEntityRenderers;
 import com.tutorial.tutorialmod.main.TutorialMod;

@@ -3,9 +3,11 @@ package com.tutorial.tutorialmod.main;
 
 
 
-import com.tutorial.tutorialmod.mobdata.TutorialBoat.TutorialBoat;
-import com.tutorial.tutorialmod.mobdata.TutorialHorse.TutorialHorse;
-import com.tutorial.tutorialmod.mobdata.TutorialPig.TutorialPig;
+
+import com.tutorial.tutorialmod.mobdata.creature.TutorialHorse.TutorialHorse;
+import com.tutorial.tutorialmod.mobdata.creature.TutorialPig.TutorialPig;
+import com.tutorial.tutorialmod.mobdata.inanimate.TutorialBoat.TutorialBoat;
+import com.tutorial.tutorialmod.mobdata.inanimate.TutorialCar.TutorialCar;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
@@ -28,6 +30,8 @@ public class ModEntityType{
     //乗り物
     public static final EntityType<TutorialBoat> TUTORIAL_BOAT= EntityType.Builder.of(TutorialBoat::new,MobCategory.MISC)
             .sized(1.375F, 0.5625F).clientTrackingRange(10).build(prefix("tutorial_boat"));
+    public static final EntityType<TutorialCar> TUTORIAL_CAR= EntityType.Builder.of(TutorialCar::new,MobCategory.MISC)
+            .sized(1.375F, 0.5625F).clientTrackingRange(10).build(prefix("tutorial_car"));
 
     private static String prefix(String path) {
         return TutorialMod.MOD_ID + "." + path;
@@ -38,6 +42,7 @@ public class ModEntityType{
         event.getRegistry().register(TUTORIAL_PIG.setRegistryName("tutorial_pig"));
         event.getRegistry().register(TUTORIAL_HORSE.setRegistryName("tutorial_horse"));
         event.getRegistry().register(TUTORIAL_BOAT.setRegistryName("tutorial_boat"));
+        event.getRegistry().register(TUTORIAL_CAR.setRegistryName("tutorial_car"));
 
 
         SpawnPlacements.register(TUTORIAL_PIG, SpawnPlacements.Type.ON_GROUND,

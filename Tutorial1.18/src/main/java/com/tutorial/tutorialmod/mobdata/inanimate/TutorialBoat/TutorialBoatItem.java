@@ -1,4 +1,4 @@
-package com.tutorial.tutorialmod.mobdata.TutorialBoat;
+package com.tutorial.tutorialmod.mobdata.inanimate.TutorialBoat;
 
 
 import net.minecraft.core.BlockPos;
