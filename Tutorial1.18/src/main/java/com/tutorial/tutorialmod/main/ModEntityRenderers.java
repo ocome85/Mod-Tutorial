@@ -9,6 +9,10 @@ import com.tutorial.tutorialmod.mobdata.creature.TutorialHorse.TutorialHorseMode
 import com.tutorial.tutorialmod.mobdata.creature.TutorialHorse.TutorialHorseRenderer;
 import com.tutorial.tutorialmod.mobdata.creature.TutorialPig.TutorialPigModel;
 import com.tutorial.tutorialmod.mobdata.creature.TutorialPig.TutorialPigRenderer;
+import com.tutorial.tutorialmod.mobdata.enemy.TutorialWitch.TutorialWitchModel;
+import com.tutorial.tutorialmod.mobdata.enemy.TutorialWitch.TutorialWitchRenderer;
+import com.tutorial.tutorialmod.mobdata.enemy.TutorialZombie.TutorialZombieModel;
+import com.tutorial.tutorialmod.mobdata.enemy.TutorialZombie.TutorialZombieRenderer;
 import com.tutorial.tutorialmod.mobdata.inanimate.TutorialBoat.TutorialBoat;
 import com.tutorial.tutorialmod.mobdata.inanimate.TutorialBoat.TutorialBoatModel;
 import com.tutorial.tutorialmod.mobdata.inanimate.TutorialBoat.TutorialBoatRenderer;
@@ -17,6 +21,7 @@ import com.tutorial.tutorialmod.mobdata.inanimate.TutorialCar.TutorialCarModel;
 import com.tutorial.tutorialmod.mobdata.inanimate.TutorialCar.TutorialCarRenderer;
 import net.minecraft.client.model.AbstractZombieModel;
 import net.minecraft.client.model.HorseModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -46,13 +51,13 @@ public class ModEntityRenderers{
     public static ModelLayerLocation TUTORIAL_HORSE_LAYER = new ModelLayerLocation(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_horse"), "tutorial_horse");
     public static ModelLayerLocation TUTORIAL_BOAT_LAYER = new ModelLayerLocation(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_boat"), "tutorial_boat");
     public static ModelLayerLocation TUTORIAL_CAR_LAYER = new ModelLayerLocation(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_car"), "tutorial_car");
+    public static ModelLayerLocation TUTORIAL_ZOMNBIE_LAYER = new ModelLayerLocation(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_zombie"), "tutorial_zombie");
+    public static ModelLayerLocation TUTORIAL_WITCH_LAYER = new ModelLayerLocation(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_witch"), "tutorial_witch");
 
     public static ModelLayerLocation createBoatModelName(TutorialBoat.Type p_171290_) {
         return createLocation("boat/" + p_171290_.getName(), "main");
     }
-    public static ModelLayerLocation createCarModelName(TutorialCar.Type p_1712900_) {
-        return createLocation("car/" + p_1712900_.getName(), "main");
-    }
+
 
     private static ModelLayerLocation createLocation(String p_171301_, String p_171302_) {
         return new ModelLayerLocation(new ResourceLocation("minecraft", p_171301_), p_171302_);
@@ -66,6 +71,8 @@ public class ModEntityRenderers{
         event.registerEntityRenderer(ModEntityType.TUTORIAL_HORSE, TutorialHorseRenderer::new);
         event.registerEntityRenderer(ModEntityType.TUTORIAL_BOAT, TutorialBoatRenderer::new);
         event.registerEntityRenderer(ModEntityType.TUTORIAL_CAR, TutorialCarRenderer::new);
+        event.registerEntityRenderer(ModEntityType.TUTORIAL_ZOMBIE, TutorialZombieRenderer::new);
+        event.registerEntityRenderer(ModEntityType.TUTORIAL_WITCH, TutorialWitchRenderer::new);
 
 
     }
@@ -76,5 +83,7 @@ public class ModEntityRenderers{
         event.registerLayerDefinition(TUTORIAL_HORSE_LAYER,  TutorialHorseModel::createBodyLayer);
         event.registerLayerDefinition(TUTORIAL_BOAT_LAYER,  TutorialBoatModel::createBodyModel);
         event.registerLayerDefinition(TUTORIAL_CAR_LAYER,  TutorialCarModel::createBodyModel);
+        event.registerLayerDefinition(TUTORIAL_ZOMNBIE_LAYER,  TutorialZombieModel::createBodyLayer);
+        event.registerLayerDefinition(TUTORIAL_WITCH_LAYER,  TutorialWitchModel::createBodyLayer);
     }
 }
