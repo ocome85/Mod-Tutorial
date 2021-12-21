@@ -2,18 +2,23 @@ package com.tutorial.tutorialmod.mobdata.enemy.TutorialZombie;
 
 
 import com.tutorial.tutorialmod.main.ModEntityType;
+import com.tutorial.tutorialmod.mobdata.enemy.EnemyAttack.BeamAttackGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -31,7 +36,6 @@ import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.Turtle;
 import net.minecraft.world.entity.monster.*;
-import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -39,21 +43,25 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.function.Predicate;
 
 public class TutorialZombie extends Monster {
+    private final ServerBossEvent bossEvent = (ServerBossEvent)(new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.PROGRESS)).setDarkenScreen(true);
+    private static final EntityDataAccessor<Boolean> DATA_ID_MOVING = SynchedEntityData.defineId(TutorialZombie.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_ID_ATTACK_TARGET = SynchedEntityData.defineId(TutorialZombie.class, EntityDataSerializers.INT);
+    protected RandomStrollGoal randomStrollGoal;
+    @Nullable
     private static final UUID SPEED_MODIFIER_BABY_UUID = UUID.fromString("B9766B59-9566-4402-BC1F-2EE2A270D836");
-    private static final AttributeModifier SPEED_MODIFIER_BABY = new AttributeModifier(SPEED_MODIFIER_BABY_UUID, "Baby speed boost", 0.5D, AttributeModifier.Operation.MULTIPLY_BASE);
-    private static final EntityDataAccessor<Boolean> DATA_BABY_ID = SynchedEntityData.defineId(TutorialZombie.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> DATA_SPECIAL_TYPE_ID = SynchedEntityData.defineId(TutorialZombie.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> DATA_DROWNED_CONVERSION_ID = SynchedEntityData.defineId(TutorialZombie.class, EntityDataSerializers.BOOLEAN);
     public static final float ZOMBIE_LEADER_CHANCE = 0.05F;
     public static final int REINFORCEMENT_ATTEMPTS = 50;
     public static final int REINFORCEMENT_RANGE_MAX = 40;
@@ -76,36 +84,49 @@ public class TutorialZombie extends Monster {
     }
 
     protected void registerGoals() {
-        this.goalSelector.addGoal(4, new TutorialZombie.ZombieAttackTurtleEggGoal(this, 1.0D, 3));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.addBehaviourGoals();
     }
 
     protected void addBehaviourGoals() {
-       // this.goalSelector.addGoal(2, new ZombieAttackGoal(this, 1.0D, false));
-        this.goalSelector.addGoal(6, new MoveThroughVillageGoal(this, 1.0D, true, 4, this::canBreakDoors));
+
+        this.goalSelector.addGoal(4, new BeamAttackGoal(this, 1.0D, false));
+        this.randomStrollGoal = new RandomStrollGoal(this, 1.0D, 80);
+
         this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers(ZombifiedPiglin.class));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
-        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Turtle.class, 10, true, false, Turtle.BABY_ON_LAND_SELECTOR));
+    }
+    public void travel(Vec3 p_32858_) {
+        if (this.isEffectiveAi() && this.isInWater()) {
+            this.moveRelative(0.1F, p_32858_);
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.9D));
+           if (!this.isMoving() && this.getTarget() == null) {
+               this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
+            }
+        } else {
+            super.travel(p_32858_);
+        }
+
+    }
+
+
+    public boolean isMoving() {
+        return this.entityData.get(DATA_ID_MOVING);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Monster.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 35.0D).add(Attributes.MOVEMENT_SPEED, (double)0.23F).add(Attributes.ATTACK_DAMAGE, 3.0D).add(Attributes.ARMOR, 2.0D).add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
+        return Monster.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 350.0D).add(Attributes.MOVEMENT_SPEED, (double)0.40F).add(Attributes.ATTACK_DAMAGE, 3.0D).add(Attributes.ARMOR, 2.0D).add(Attributes.SPAWN_REINFORCEMENTS_CHANCE).add(Attributes.MAX_HEALTH, 30.0D);
     }
 
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.getEntityData().define(DATA_BABY_ID, false);
+        this.entityData.define(DATA_ID_MOVING, false);
+        this.entityData.define(DATA_ID_ATTACK_TARGET, 0);
         this.getEntityData().define(DATA_SPECIAL_TYPE_ID, 0);
-        this.getEntityData().define(DATA_DROWNED_CONVERSION_ID, false);
-    }
-
-    public boolean isUnderWaterConverting() {
-        return this.getEntityData().get(DATA_DROWNED_CONVERSION_ID);
     }
 
     public boolean canBreakDoors() {
@@ -143,89 +164,23 @@ public class TutorialZombie extends Monster {
         return super.getExperienceReward(p_34322_);
     }
 
-    public void setBaby(boolean p_34309_) {
-        this.getEntityData().set(DATA_BABY_ID, p_34309_);
-        if (this.level != null && !this.level.isClientSide) {
-            AttributeInstance attributeinstance = this.getAttribute(Attributes.MOVEMENT_SPEED);
-            attributeinstance.removeModifier(SPEED_MODIFIER_BABY);
-            if (p_34309_) {
-                attributeinstance.addTransientModifier(SPEED_MODIFIER_BABY);
-            }
-        }
 
-    }
 
     public void onSyncedDataUpdated(EntityDataAccessor<?> p_34307_) {
-        if (DATA_BABY_ID.equals(p_34307_)) {
-            this.refreshDimensions();
-        }
-
         super.onSyncedDataUpdated(p_34307_);
-    }
-
-    protected boolean convertsInWater() {
-        return true;
     }
 
     public void tick() {
         if (!this.level.isClientSide && this.isAlive() && !this.isNoAi()) {
-            if (this.isUnderWaterConverting()) {
-                --this.conversionTime;
-                if (this.conversionTime < 0 && net.minecraftforge.event.ForgeEventFactory.canLivingConvert(this, ModEntityType.TUTORIAL_ZOMBIE, (timer) -> this.conversionTime = timer)) {
-                    this.doUnderWaterConversion();
-                }
-            } else if (this.convertsInWater()) {
-                if (this.isEyeInFluid(FluidTags.WATER)) {
-                    ++this.inWaterTime;
-                    if (this.inWaterTime >= 600) {
-                        this.startUnderWaterConversion(300);
-                    }
-                } else {
-                    this.inWaterTime = -1;
-                }
-            }
         }
-
+        this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
         super.tick();
     }
 
+
+
     public void aiStep() {
-        if (this.isAlive()) {
-            boolean flag = this.isSunSensitive() && this.isSunBurnTick();
-            if (flag) {
-                ItemStack itemstack = this.getItemBySlot(EquipmentSlot.HEAD);
-                if (!itemstack.isEmpty()) {
-                    if (itemstack.isDamageableItem()) {
-                        itemstack.setDamageValue(itemstack.getDamageValue() + this.random.nextInt(2));
-                        if (itemstack.getDamageValue() >= itemstack.getMaxDamage()) {
-                            this.broadcastBreakEvent(EquipmentSlot.HEAD);
-                            this.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
-                        }
-                    }
-
-                    flag = false;
-                }
-
-                if (flag) {
-                    this.setSecondsOnFire(8);
-                }
-            }
-        }
-
         super.aiStep();
-    }
-
-    private void startUnderWaterConversion(int p_34279_) {
-        this.conversionTime = p_34279_;
-        this.getEntityData().set(DATA_DROWNED_CONVERSION_ID, true);
-    }
-
-    protected void doUnderWaterConversion() {
-        this.convertToZombieType(ModEntityType.TUTORIAL_ZOMBIE);
-        if (!this.isSilent()) {
-            this.level.levelEvent((Player)null, 1040, this.blockPosition(), 0);
-        }
-
     }
 
     protected void convertToZombieType(EntityType<? extends TutorialZombie> p_34311_) {
@@ -236,10 +191,6 @@ public class TutorialZombie extends Monster {
             net.minecraftforge.event.ForgeEventFactory.onLivingConvert(this, zombie);
         }
 
-    }
-
-    protected boolean isSunSensitive() {
-        return true;
     }
 
     public boolean hurt(DamageSource p_34288_, float p_34289_) {
@@ -315,7 +266,6 @@ public class TutorialZombie extends Monster {
         p_34319_.putBoolean("IsBaby", this.isBaby());
         p_34319_.putBoolean("CanBreakDoors", this.canBreakDoors());
         p_34319_.putInt("InWaterTime", this.isInWater() ? this.inWaterTime : -1);
-        p_34319_.putInt("DrownedConversionTime", this.isUnderWaterConverting() ? this.conversionTime : -1);
     }
 
     public void readAdditionalSaveData(CompoundTag p_34305_) {
@@ -323,10 +273,24 @@ public class TutorialZombie extends Monster {
         this.setBaby(p_34305_.getBoolean("IsBaby"));
         this.setCanBreakDoors(p_34305_.getBoolean("CanBreakDoors"));
         this.inWaterTime = p_34305_.getInt("InWaterTime");
-        if (p_34305_.contains("DrownedConversionTime", 99) && p_34305_.getInt("DrownedConversionTime") > -1) {
-            this.startUnderWaterConversion(p_34305_.getInt("DrownedConversionTime"));
+        if (this.hasCustomName()) {
+            this.bossEvent.setName(this.getDisplayName());
         }
+    }
 
+    public void setCustomName(@Nullable Component p_31476_) {
+        super.setCustomName(p_31476_);
+        this.bossEvent.setName(this.getDisplayName());
+    }
+
+    public void startSeenByPlayer(ServerPlayer p_31483_) {
+        super.startSeenByPlayer(p_31483_);
+        this.bossEvent.addPlayer(p_31483_);
+    }
+
+    public void stopSeenByPlayer(ServerPlayer p_31488_) {
+        super.stopSeenByPlayer(p_31488_);
+        this.bossEvent.removePlayer(p_31488_);
     }
 
     public void killed(ServerLevel p_34281_, LivingEntity p_34282_) {
@@ -462,23 +426,6 @@ public class TutorialZombie extends Monster {
         return new ItemStack(Items.ZOMBIE_HEAD);
     }
 
-    class ZombieAttackTurtleEggGoal extends RemoveBlockGoal {
-        ZombieAttackTurtleEggGoal(PathfinderMob p_34344_, double p_34345_, int p_34346_) {
-            super(Blocks.TURTLE_EGG, p_34344_, p_34345_, p_34346_);
-        }
-
-        public void playDestroyProgressSound(LevelAccessor p_34351_, BlockPos p_34352_) {
-            p_34351_.playSound((Player)null, p_34352_, SoundEvents.ZOMBIE_DESTROY_EGG, SoundSource.HOSTILE, 0.5F, 0.9F + TutorialZombie.this.random.nextFloat() * 0.2F);
-        }
-
-        public void playBreakSound(Level p_34348_, BlockPos p_34349_) {
-            p_34348_.playSound((Player)null, p_34349_, SoundEvents.TURTLE_EGG_BREAK, SoundSource.BLOCKS, 0.7F, 0.9F + p_34348_.random.nextFloat() * 0.2F);
-        }
-
-        public double acceptedDistance() {
-            return 1.14D;
-        }
-    }
 
     public static class ZombieGroupData implements SpawnGroupData {
         public final boolean isBaby;

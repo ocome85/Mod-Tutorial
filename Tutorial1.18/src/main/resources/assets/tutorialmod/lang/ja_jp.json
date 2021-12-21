@@ -9,5 +9,6 @@
   "item.tutorialmod.zone" : "Zone",
   "item.tutorialmod.zone.desc" : "Zone Drink",
 
-  "item.tutorialmod.tutorial_boat" : "夜空のボート"
+  "item.tutorialmod.tutorial_boat" : "夜空のボート",
+  "entity.tutorialmod.tutorial_zombie" : "アルス・アルマル"
 }
