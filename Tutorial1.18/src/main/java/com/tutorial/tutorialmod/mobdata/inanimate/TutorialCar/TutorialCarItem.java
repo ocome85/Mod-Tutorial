@@ -22,11 +22,9 @@ import java.util.function.Predicate;
 
 public class TutorialCarItem extends Item {
     private static final Predicate<Entity> ENTITY_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isPickable);
-    private final TutorialCar.Type type;
-
-    public TutorialCarItem(TutorialCar.Type p_40619_, Properties p_40620_) {
+    public TutorialCarItem(TutorialCar p_40619_, Properties p_40620_) {
         super(p_40620_);
-        this.type = p_40619_;
+
     }
 
     public InteractionResultHolder<ItemStack> use(Level p_40622_, Player p_40623_, InteractionHand p_40624_) {
@@ -51,7 +49,6 @@ public class TutorialCarItem extends Item {
 
             if (hitresult.getType() == HitResult.Type.BLOCK) {
                 TutorialCar car = new TutorialCar(p_40622_, hitresult.getLocation().x, hitresult.getLocation().y, hitresult.getLocation().z);
-                car.setType(this.type);
                 car.setYRot(p_40623_.getYRot());
                 if (!p_40622_.noCollision(car, car.getBoundingBox())) {
                     return InteractionResultHolder.fail(itemstack);

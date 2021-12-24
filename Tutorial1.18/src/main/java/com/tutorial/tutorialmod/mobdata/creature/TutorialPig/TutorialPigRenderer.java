@@ -16,7 +16,7 @@ public class TutorialPigRenderer extends MobRenderer<TutorialPig, TutorialPigMod
     private static final ResourceLocation PIG_LOCATION = new ResourceLocation(TutorialMod.MOD_ID,"textures/entity/tutorial_pig/tutorial_pig.png");
 
     public TutorialPigRenderer(EntityRendererProvider.Context p_174340_) {
-        super(p_174340_, new TutorialPigModel<>(p_174340_.bakeLayer(ModEntityRenderers.TUTORIAL_PIG_LAYER)), 0.7F);
+        super(p_174340_, new TutorialPigModel<TutorialPig>(p_174340_.bakeLayer(ModEntityRenderers.TUTORIAL_PIG_LAYER)), 0.7F);
         this.addLayer(new SaddleLayer<>(this, new TutorialPigModel<>(p_174340_.bakeLayer(ModelLayers.PIG_SADDLE)), new ResourceLocation("textures/entity/pig/pig_saddle.png")));
     }
 

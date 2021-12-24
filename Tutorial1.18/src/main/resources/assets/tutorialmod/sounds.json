@@ -1,0 +1,9 @@
+{
+  "tutorial_sound": {
+    "category": "tutorial",
+    "subtitle": "tutorialmod:tutorial_sound",
+    "sounds": [
+      "tutorialmod:tutorial_sound"
+    ]
+  }
+}

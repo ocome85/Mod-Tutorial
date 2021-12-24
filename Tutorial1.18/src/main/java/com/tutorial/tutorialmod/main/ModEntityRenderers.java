@@ -1,10 +1,6 @@
 package com.tutorial.tutorialmod.main;
 
 
-
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Sets;
-
 import com.tutorial.tutorialmod.mobdata.creature.TutorialHorse.TutorialHorseModel;
 import com.tutorial.tutorialmod.mobdata.creature.TutorialHorse.TutorialHorseRenderer;
 import com.tutorial.tutorialmod.mobdata.creature.TutorialPig.TutorialPigModel;
@@ -19,25 +15,12 @@ import com.tutorial.tutorialmod.mobdata.inanimate.TutorialBoat.TutorialBoatRende
 import com.tutorial.tutorialmod.mobdata.inanimate.TutorialCar.TutorialCar;
 import com.tutorial.tutorialmod.mobdata.inanimate.TutorialCar.TutorialCarModel;
 import com.tutorial.tutorialmod.mobdata.inanimate.TutorialCar.TutorialCarRenderer;
-import net.minecraft.client.model.AbstractZombieModel;
-import net.minecraft.client.model.HorseModel;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
-import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.Set;
-import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(
         modid = TutorialMod.MOD_ID,
@@ -57,7 +40,6 @@ public class ModEntityRenderers{
     public static ModelLayerLocation createBoatModelName(TutorialBoat.Type p_171290_) {
         return createLocation("boat/" + p_171290_.getName(), "main");
     }
-
 
     private static ModelLayerLocation createLocation(String p_171301_, String p_171302_) {
         return new ModelLayerLocation(new ResourceLocation("minecraft", p_171301_), p_171302_);

@@ -6,12 +6,7 @@ import com.tutorial.tutorialmod.item.Zone;
 
 import com.tutorial.tutorialmod.mobdata.inanimate.TutorialBoat.TutorialBoat;
 import com.tutorial.tutorialmod.mobdata.inanimate.TutorialBoat.TutorialBoatItem;
-import com.tutorial.tutorialmod.mobdata.inanimate.TutorialCar.TutorialCar;
-import com.tutorial.tutorialmod.mobdata.inanimate.TutorialCar.TutorialCarItem;
-import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.BoatItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,7 +20,7 @@ import net.minecraftforge.registries.ObjectHolder;
 public class ModItems {
    public static final Item TUTORIAL_T = new Item((new Item.Properties()).tab(TutorialMod.MOD_TAB));
     public static final Item TUTORIAL_BOAT = new TutorialBoatItem(TutorialBoat.Type.OAK, (new Item.Properties()).stacksTo(1).tab(TutorialMod.MOD_TAB));
-    public static final Item TUTORIAL_CAR = new TutorialCarItem(TutorialCar.Type.OAK, (new Item.Properties()).stacksTo(1).tab(TutorialMod.MOD_TAB));
+    public static final Item TUTORIAL_CAR = new Item((new Item.Properties()).stacksTo(1).tab(TutorialMod.MOD_TAB));
 
     @SubscribeEvent
     public static void  registerItem(RegistryEvent.Register<Item> event){

@@ -40,7 +40,8 @@ public class ModEntityType{
     public static final EntityType<TutorialBoat> TUTORIAL_BOAT= EntityType.Builder.of(TutorialBoat::new,MobCategory.MISC)
             .sized(1.375F, 0.5625F).clientTrackingRange(10).build(prefix("tutorial_boat"));
     public static final EntityType<TutorialCar> TUTORIAL_CAR= EntityType.Builder.of(TutorialCar::new,MobCategory.MISC)
-            .sized(1.375F, 0.5625F).clientTrackingRange(10).build(prefix("tutorial_car"));
+            .sized(4F, 2F).build(prefix("tutorial_car"));
+
 
     private static String prefix(String path) {
         return TutorialMod.MOD_ID + "." + path;

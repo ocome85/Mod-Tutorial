@@ -1,6 +1,6 @@
 package com.tutorial.tutorialmod.main;
 
-import net.minecraft.world.entity.EntityType;
+
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -10,19 +10,12 @@ import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.InterModComms;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.stream.Collectors;
 
 @net.minecraftforge.fml.common.Mod("tutorialmod")
 public class TutorialMod
@@ -34,9 +27,10 @@ public class TutorialMod
 
     public TutorialMod() {
 
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ModGenerate::ModGenerate);
+                MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ModGenerate::ModGenerate);
 
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        ModSoundEvents.SOUNDS.register(eventBus);
         // Register the setup method for modloading
         eventBus.addListener(this::setup);
         // Register the enqueueIMC method for modloading

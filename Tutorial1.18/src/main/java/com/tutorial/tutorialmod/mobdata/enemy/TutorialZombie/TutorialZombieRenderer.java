@@ -27,16 +27,11 @@ import static com.tutorial.tutorialmod.main.ModEntityRenderers.TUTORIAL_WITCH_LA
 import static com.tutorial.tutorialmod.main.ModEntityRenderers.TUTORIAL_ZOMNBIE_LAYER;
 
 public class TutorialZombieRenderer extends MobRenderer {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(TutorialMod.MOD_ID, "textures/entity/ars/ars.png");
-    private static final ResourceLocation GUARDIAN_BEAM_LOCATION = new ResourceLocation("textures/entity/end_gateway_beam.png");
-    private static final RenderType BEAM_RENDER_TYPE = RenderType.entityCutoutNoCull(GUARDIAN_BEAM_LOCATION);
+    private static final ResourceLocation TEXTURE = new ResourceLocation(TutorialMod.MOD_ID, "textures/entity/ars/lars.png");
 
 
 
-    public TutorialZombieRenderer(EntityRendererProvider.Context p_174456_) {
-        this(p_174456_, ModEntityRenderers.TUTORIAL_ZOMNBIE_LAYER);
-    }
-    public TutorialZombieRenderer(EntityRendererProvider.Context p_174458_, ModelLayerLocation p_174459_) {
+    public TutorialZombieRenderer(EntityRendererProvider.Context p_174458_) {
         super(p_174458_, new TutorialZombieModel<>(p_174458_.bakeLayer(TUTORIAL_ZOMNBIE_LAYER)),0.5F);
     }
 

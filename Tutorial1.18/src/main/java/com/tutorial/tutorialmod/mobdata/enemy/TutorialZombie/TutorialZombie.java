@@ -1,7 +1,7 @@
 package com.tutorial.tutorialmod.mobdata.enemy.TutorialZombie;
 
 
-import com.tutorial.tutorialmod.main.ModEntityType;
+import com.tutorial.tutorialmod.main.ModSoundEvents;
 import com.tutorial.tutorialmod.mobdata.enemy.EnemyAttack.BeamAttackGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -14,16 +14,12 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -34,13 +30,16 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.animal.Turtle;
-import net.minecraft.world.entity.monster.*;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.ZombieVillager;
+import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.*;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -48,10 +47,8 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 import java.util.function.Predicate;
 
 public class TutorialZombie extends Monster {
@@ -60,27 +57,16 @@ public class TutorialZombie extends Monster {
     private static final EntityDataAccessor<Integer> DATA_ID_ATTACK_TARGET = SynchedEntityData.defineId(TutorialZombie.class, EntityDataSerializers.INT);
     protected RandomStrollGoal randomStrollGoal;
     @Nullable
-    private static final UUID SPEED_MODIFIER_BABY_UUID = UUID.fromString("B9766B59-9566-4402-BC1F-2EE2A270D836");
-    private static final EntityDataAccessor<Integer> DATA_SPECIAL_TYPE_ID = SynchedEntityData.defineId(TutorialZombie.class, EntityDataSerializers.INT);
-    public static final float ZOMBIE_LEADER_CHANCE = 0.05F;
-    public static final int REINFORCEMENT_ATTEMPTS = 50;
-    public static final int REINFORCEMENT_RANGE_MAX = 40;
-    public static final int REINFORCEMENT_RANGE_MIN = 7;
-    private static final float BREAK_DOOR_CHANCE = 0.1F;
+   private static final EntityDataAccessor<Integer> DATA_SPECIAL_TYPE_ID = SynchedEntityData.defineId(TutorialZombie.class, EntityDataSerializers.INT);
     private static final Predicate<Difficulty> DOOR_BREAKING_PREDICATE = (p_34284_) -> {
         return p_34284_ == Difficulty.HARD;
     };
     private final BreakDoorGoal breakDoorGoal = new BreakDoorGoal(this, DOOR_BREAKING_PREDICATE);
     private boolean canBreakDoors;
     private int inWaterTime;
-    private int conversionTime;
 
     public TutorialZombie(EntityType<? extends TutorialZombie> p_34271_, Level p_34272_) {
         super(p_34271_, p_34272_);
-    }
-
-    protected TutorialZombie(Level p_34274_) {
-        this(ModEntityType.TUTORIAL_ZOMBIE, p_34274_);
     }
 
     protected void registerGoals() {
@@ -183,16 +169,6 @@ public class TutorialZombie extends Monster {
         super.aiStep();
     }
 
-    protected void convertToZombieType(EntityType<? extends TutorialZombie> p_34311_) {
-        TutorialZombie zombie = this.convertTo(p_34311_, true);
-        if (zombie != null) {
-            zombie.handleAttributes(zombie.level.getCurrentDifficultyAt(zombie.blockPosition()).getSpecialMultiplier());
-            zombie.setCanBreakDoors(zombie.supportsBreakDoorGoal() && this.canBreakDoors());
-            net.minecraftforge.event.ForgeEventFactory.onLivingConvert(this, zombie);
-        }
-
-    }
-
     public boolean hurt(DamageSource p_34288_, float p_34289_) {
         if (!super.hurt(p_34288_, p_34289_)) {
             return false;
@@ -225,19 +201,19 @@ public class TutorialZombie extends Monster {
     }
 
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ZOMBIE_AMBIENT;
+        return ModSoundEvents.TUTORIALSOUND.get();
     }
 
     protected SoundEvent getHurtSound(DamageSource p_34327_) {
-        return SoundEvents.ZOMBIE_HURT;
+        return ModSoundEvents.TUTORIALSOUND.get();
     }
 
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ZOMBIE_DEATH;
+        return ModSoundEvents.TUTORIALSOUND.get();
     }
 
     protected SoundEvent getStepSound() {
-        return SoundEvents.ZOMBIE_STEP;
+        return ModSoundEvents.TUTORIALSOUND.get();
     }
 
     protected void playStepSound(BlockPos p_34316_, BlockState p_34317_) {
