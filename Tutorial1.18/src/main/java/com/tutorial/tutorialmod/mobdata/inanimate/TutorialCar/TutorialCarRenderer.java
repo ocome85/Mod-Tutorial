@@ -36,7 +36,7 @@ public class TutorialCarRenderer extends EntityRenderer<TutorialCar> {
 
     public void render(TutorialCar p_113929_, float p_113930_, float p_113931_, PoseStack p_113932_, MultiBufferSource p_113933_, int p_113934_) {
         p_113932_.pushPose();
-        p_113932_.translate(0.0D, 0.375D, 0.0D);
+        p_113932_.translate(0.0D, 1.375D, 0.0D); // 機体の高さ調整
         p_113932_.mulPose(Vector3f.YP.rotationDegrees(180.0F - p_113930_));
         float f = (float) p_113929_.getHurtTime() - p_113931_;
         float f1 = p_113929_.getDamage() - p_113931_;
@@ -50,22 +50,17 @@ public class TutorialCarRenderer extends EntityRenderer<TutorialCar> {
 
         float f2 = p_113929_.getBubbleAngle(p_113931_);
         if (!Mth.equal(f2, 0.0F)) {
-            p_113932_.mulPose(new Quaternion(new Vector3f(1.0F, 0.0F, 1.0F), p_113929_.getBubbleAngle(p_113931_), true));
+            p_113932_.mulPose(new Quaternion(new Vector3f(1.0F, 0.0F, 1.0F), p_113929_.getBubbleAngle(p_113931_), true)); //
         }
 
         Pair<ResourceLocation, TutorialCarModel> pair = getModelWithLocation(p_113929_);
         ResourceLocation resourcelocation = pair.getFirst();
-        TutorialCarModel boatmodel = pair.getSecond();
-        p_113932_.scale(-1.0F, -1.0F, 1.0F);
-        p_113932_.mulPose(Vector3f.YP.rotationDegrees(0.0F));
-        boatmodel.setupAnim(p_113929_, p_113931_, 0.0F, -0.1F, 0.0F, 0.0F);
-        VertexConsumer vertexconsumer = p_113933_.getBuffer(boatmodel.renderType(resourcelocation));
-        boatmodel.renderToBuffer(p_113932_, vertexconsumer, p_113934_, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-
-      //  if (!p_113929_.isUnderWater()) {
-          //  VertexConsumer vertexconsumer1 = p_113933_.getBuffer(RenderType.waterMask());
-            //boatmodel.waterPatch().render(p_113932_, vertexconsumer1, p_113934_, OverlayTexture.NO_OVERLAY);
-     //   }
+        TutorialCarModel carmodel = pair.getSecond();
+        p_113932_.scale(-1.0F, -1.0F, 1.0F); //car direction xyz default -1 -1 1
+        p_113932_.mulPose(Vector3f.YP.rotationDegrees(0.0F)); //動く向き
+        carmodel.setupAnim(p_113929_, p_113931_, 0.0F, -0.1F, 0.0F, 0.0F);
+        VertexConsumer vertexconsumer = p_113933_.getBuffer(carmodel.renderType(resourcelocation));
+        carmodel.renderToBuffer(p_113932_, vertexconsumer, p_113934_, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 
         p_113932_.popPose();
         super.render(p_113929_, p_113930_, p_113931_, p_113932_, p_113933_, p_113934_);

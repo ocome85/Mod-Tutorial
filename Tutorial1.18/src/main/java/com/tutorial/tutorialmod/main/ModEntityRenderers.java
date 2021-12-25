@@ -64,7 +64,7 @@ public class ModEntityRenderers{
         event.registerLayerDefinition(TUTORIAL_PIG_LAYER, TutorialPigModel::createBodyLayer);
         event.registerLayerDefinition(TUTORIAL_HORSE_LAYER,  TutorialHorseModel::createBodyLayer);
         event.registerLayerDefinition(TUTORIAL_BOAT_LAYER,  TutorialBoatModel::createBodyModel);
-        event.registerLayerDefinition(TUTORIAL_CAR_LAYER,  TutorialCarModel::createBodyModel);
+        event.registerLayerDefinition(TUTORIAL_CAR_LAYER,  TutorialCarModel::createBodyLayer);
         event.registerLayerDefinition(TUTORIAL_ZOMNBIE_LAYER,  TutorialZombieModel::createBodyLayer);
         event.registerLayerDefinition(TUTORIAL_WITCH_LAYER,  TutorialWitchModel::createBodyLayer);
     }
