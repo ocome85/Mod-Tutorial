@@ -1,5 +1,6 @@
 package com.tutorial.tutorialmod.main;
 
+import com.tutorial.tutorialmod.item.Rainbow_Apple;
 import com.tutorial.tutorialmod.item.Strawberry;
 import com.tutorial.tutorialmod.item.Tutorial_T2;
 import com.tutorial.tutorialmod.item.Zone;
@@ -29,6 +30,7 @@ public class ModItems {
         event.getRegistry().register(TUTORIAL_CAR.setRegistryName("tutorial_car"));
         event.getRegistry().register(new Tutorial_T2());
         event.getRegistry().register(new Strawberry());
+        event.getRegistry().register(new Rainbow_Apple());
         event.getRegistry().register(new Zone());
 
     }

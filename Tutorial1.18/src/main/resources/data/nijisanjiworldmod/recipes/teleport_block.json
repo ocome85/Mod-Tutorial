@@ -1,0 +1,36 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:red_sand"
+        },
+        {
+            "item": "minecraft:quartz_block"
+        },
+        {
+            "item": "minecraft:lapis_block"
+        },
+        {
+            "item": "minecraft:iron_block"
+        },
+        {
+            "item": "minecraft:stone"
+        },
+        {
+            "item": "minecraft:diamond_block"
+        },
+        {
+            "item": "minecraft:emerald_block"
+        },
+        {
+            "item": "minecraft:coal_block"
+        },
+        {
+            "item": "minecraft:gold_block"
+        }
+    ],
+    "result": {
+        "item": "nijisanjiworldmod:teleport_block",
+        "count": 1
+    }
+}
