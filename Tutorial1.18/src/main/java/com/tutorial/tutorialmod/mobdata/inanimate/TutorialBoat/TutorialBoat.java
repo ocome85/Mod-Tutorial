@@ -13,7 +13,7 @@ public class TutorialBoat extends Boat {
     }
 
     protected TutorialBoat(Level p_38293_, double p_38294_, double p_38295_, double p_38296_) {
-        this(ModEntityType.TUTORIAL_BOAT, p_38293_);
+        this(ModEntityType.TUTORIAL_BOAT.get(), p_38293_);
         this.setPos(p_38294_, p_38295_, p_38296_);
         this.xo = p_38294_;
         this.yo = p_38295_;

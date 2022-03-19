@@ -28,7 +28,6 @@ public class Rainbow_Apple extends Item {
                                                                                                                           // =20=1s         //1=2level      //1F =100%
                         .build())
                 );
-        this.setRegistryName("rainbow_apple");
     }
 
     @Override

@@ -10,6 +10,9 @@ import com.tutorial.tutorialmod.mobdata.enemy.TutorialWitch.TutorialWitch;
 import com.tutorial.tutorialmod.mobdata.enemy.TutorialZombie.TutorialZombie;
 import com.tutorial.tutorialmod.mobdata.inanimate.TutorialBoat.TutorialBoat;
 import com.tutorial.tutorialmod.mobdata.inanimate.TutorialCar.TutorialCar;
+import com.tutorial.tutorialmod.mobdata.inanimate.TutorialEntity.TutorialEntity;
+import com.tutorial.tutorialmod.mobdata.inanimate.TutorialEntity.TutorialEntityRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
@@ -19,62 +22,78 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 
 @Mod.EventBusSubscriber(modid = TutorialMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 
 public class ModEntityType{
-    //動物
-    public static final EntityType<TutorialPig> TUTORIAL_PIG= EntityType.Builder.of(TutorialPig::new, MobCategory.CREATURE)
-            .sized(0.9F, 0.9F).build(prefix("tutorial_pig"));
-    public static final EntityType<TutorialHorse> TUTORIAL_HORSE= EntityType.Builder.of(TutorialHorse::new, MobCategory.CREATURE)
-            .sized(0.9F, 0.9F).build(prefix("tutorial_horse"));
+    public static DeferredRegister<EntityType<?>> ENTITY_TYPES
+            = DeferredRegister.create(ForgeRegistries.ENTITIES, TutorialMod.MOD_ID);
+
+//動物
+    public static final RegistryObject<EntityType<TutorialPig>> TUTORIAL_PIG =
+            ENTITY_TYPES.register("tutorial_pig",
+                    () -> EntityType.Builder.of(TutorialPig::new,
+                                    MobCategory.CREATURE).sized(0.9f, 0.9f)
+                            .build(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_pig").toString()));
+    public static final RegistryObject<EntityType<TutorialHorse>> TUTORIAL_HORSE =
+            ENTITY_TYPES.register("tutorial_horse",
+                    () -> EntityType.Builder.of(TutorialHorse::new,
+                                    MobCategory.CREATURE).sized(0.9f, 0.9f)
+                            .build(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_horse").toString()));
+
 
     //敵
-    public static final EntityType<TutorialZombie> TUTORIAL_ZOMBIE= EntityType.Builder.of(TutorialZombie::new, MobCategory.MONSTER)
-            .sized(0.9F, 0.9F).clientTrackingRange(10).build(prefix("tutorial_zombie"));
-    public static final EntityType<TutorialWitch> TUTORIAL_WITCH= EntityType.Builder.of(TutorialWitch::new, MobCategory.MONSTER)
-            .sized(0.9F, 0.9F).clientTrackingRange(10).build(prefix("tutorial_witch"));
+    public static final RegistryObject<EntityType<TutorialZombie>> TUTORIAL_ZOMBIE =
+            ENTITY_TYPES.register("tutorial_zombie",
+                    () -> EntityType.Builder.of(TutorialZombie::new,
+                                    MobCategory.MONSTER).sized(0.9f, 0.9f).clientTrackingRange(10)
+                            .build(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_zombie").toString()));
+    public static final RegistryObject<EntityType<TutorialWitch>> TUTORIAL_WITCH =
+            ENTITY_TYPES.register("tutorial_witch",
+                    () -> EntityType.Builder.of(TutorialWitch::new,
+                                    MobCategory.MONSTER).sized(0.9f, 0.9f).clientTrackingRange(10)
+                            .build(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_witch").toString()));
 
-    //乗り物
-    public static final EntityType<TutorialBoat> TUTORIAL_BOAT= EntityType.Builder.of(TutorialBoat::new,MobCategory.MISC)
-            .sized(1.375F, 0.5625F).clientTrackingRange(10).build(prefix("tutorial_boat"));
-    public static final EntityType<TutorialCar> TUTORIAL_CAR= EntityType.Builder.of(TutorialCar::new,MobCategory.MISC)
-            .sized(4F, 3F).build(prefix("tutorial_car"));
+    public static final RegistryObject<EntityType<TutorialBoat>> TUTORIAL_BOAT =
+            ENTITY_TYPES.register("tutorial_boat",
+                    () -> EntityType.Builder.of(TutorialBoat::new,
+                                    MobCategory.MISC).sized(0.9f, 0.9f).clientTrackingRange(10)
+                            .build(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_boat").toString()));
+    public static final RegistryObject<EntityType<TutorialCar>> TUTORIAL_CAR =
+            ENTITY_TYPES.register("tutorial_car",
+                    () -> EntityType.Builder.of(TutorialCar::new,
+                                    MobCategory.MISC).sized(4f, 3f).clientTrackingRange(10)
+                            .build(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_car").toString()));
+    public static final RegistryObject<EntityType<TutorialEntity>> TUTORIAL_ENTITY =
+            ENTITY_TYPES.register("tutorial_entity",
+                    () -> EntityType.Builder.of(TutorialEntity::new,
+                                    MobCategory.MISC).sized(0.1f, 0.1f).clientTrackingRange(10)
+                            .build(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_entity").toString()));
+
 //size 広さ.高さ
-
-    private static String prefix(String path) {
-        return TutorialMod.MOD_ID + "." + path;
-    }
-
     @SubscribeEvent
     public static void registerEntity(RegistryEvent.Register<EntityType<?>> event) {
-        event.getRegistry().register(TUTORIAL_PIG.setRegistryName("tutorial_pig"));
-        event.getRegistry().register(TUTORIAL_HORSE.setRegistryName("tutorial_horse"));
-        event.getRegistry().register(TUTORIAL_BOAT.setRegistryName("tutorial_boat"));
-        event.getRegistry().register(TUTORIAL_CAR.setRegistryName("tutorial_car"));
-        event.getRegistry().register(TUTORIAL_ZOMBIE.setRegistryName("tutorial_zombie"));
-        event.getRegistry().register(TUTORIAL_WITCH.setRegistryName("tutorial_witch"));
-
-
-        SpawnPlacements.register(TUTORIAL_PIG, SpawnPlacements.Type.ON_GROUND,
+        SpawnPlacements.register(TUTORIAL_PIG.get(), SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
-        SpawnPlacements.register(TUTORIAL_HORSE, SpawnPlacements.Type.ON_GROUND,
+        SpawnPlacements.register(TUTORIAL_HORSE.get(), SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
-
-        SpawnPlacements.register(TUTORIAL_ZOMBIE, SpawnPlacements.Type.ON_GROUND,
+        SpawnPlacements.register(TUTORIAL_ZOMBIE.get(), SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
-        SpawnPlacements.register(TUTORIAL_WITCH, SpawnPlacements.Type.ON_GROUND,
+        SpawnPlacements.register(TUTORIAL_WITCH.get(), SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
-
  }
 
     @SubscribeEvent
     public static void registerEntityAttribute(EntityAttributeCreationEvent event) {
-        event.put(TUTORIAL_PIG, TutorialPig.createAttributes().build());
-        event.put(TUTORIAL_HORSE, AbstractHorse.createBaseHorseAttributes().build());
-        event.put(TUTORIAL_ZOMBIE, TutorialZombie.createAttributes().build());
-        event.put(TUTORIAL_WITCH, TutorialWitch.createAttributes().build());
+        event.put(TUTORIAL_PIG.get(), TutorialPig.createAttributes().build());
+        event.put(TUTORIAL_HORSE.get(), AbstractHorse.createBaseHorseAttributes().build());
+        event.put(TUTORIAL_ZOMBIE.get(), TutorialZombie.createAttributes().build());
+        event.put(TUTORIAL_WITCH.get(), TutorialWitch.createAttributes().build());
+        event.put(TUTORIAL_ENTITY.get(), LivingEntity.createLivingAttributes().build());
 
 
     }

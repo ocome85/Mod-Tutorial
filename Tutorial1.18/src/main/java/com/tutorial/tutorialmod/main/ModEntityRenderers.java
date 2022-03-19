@@ -15,6 +15,8 @@ import com.tutorial.tutorialmod.mobdata.inanimate.TutorialBoat.TutorialBoatRende
 import com.tutorial.tutorialmod.mobdata.inanimate.TutorialCar.TutorialCar;
 import com.tutorial.tutorialmod.mobdata.inanimate.TutorialCar.TutorialCarModel;
 import com.tutorial.tutorialmod.mobdata.inanimate.TutorialCar.TutorialCarRenderer;
+import com.tutorial.tutorialmod.mobdata.inanimate.TutorialEntity.TutorialEntityModel;
+import com.tutorial.tutorialmod.mobdata.inanimate.TutorialEntity.TutorialEntityRenderer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -36,6 +38,7 @@ public class ModEntityRenderers{
     public static ModelLayerLocation TUTORIAL_CAR_LAYER = new ModelLayerLocation(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_car"), "tutorial_car");
     public static ModelLayerLocation TUTORIAL_ZOMNBIE_LAYER = new ModelLayerLocation(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_zombie"), "tutorial_zombie");
     public static ModelLayerLocation TUTORIAL_WITCH_LAYER = new ModelLayerLocation(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_witch"), "tutorial_witch");
+    public static ModelLayerLocation TUTORIAL_ENTITY_LAYER = new ModelLayerLocation(new ResourceLocation(TutorialMod.MOD_ID, "tutorial_entity"), "tutorial_entity");
 
     public static ModelLayerLocation createBoatModelName(TutorialBoat.Type p_171290_) {
         return createLocation("boat/" + p_171290_.getName(), "main");
@@ -49,12 +52,13 @@ public class ModEntityRenderers{
     //registry list
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(ModEntityType.TUTORIAL_PIG, TutorialPigRenderer::new);
-        event.registerEntityRenderer(ModEntityType.TUTORIAL_HORSE, TutorialHorseRenderer::new);
-        event.registerEntityRenderer(ModEntityType.TUTORIAL_BOAT, TutorialBoatRenderer::new);
-        event.registerEntityRenderer(ModEntityType.TUTORIAL_CAR, TutorialCarRenderer::new);
-        event.registerEntityRenderer(ModEntityType.TUTORIAL_ZOMBIE, TutorialZombieRenderer::new);
-        event.registerEntityRenderer(ModEntityType.TUTORIAL_WITCH, TutorialWitchRenderer::new);
+        event.registerEntityRenderer(ModEntityType.TUTORIAL_PIG.get(), TutorialPigRenderer::new);
+        event.registerEntityRenderer(ModEntityType.TUTORIAL_HORSE.get(), TutorialHorseRenderer::new);
+        event.registerEntityRenderer(ModEntityType.TUTORIAL_BOAT.get(), TutorialBoatRenderer::new);
+        event.registerEntityRenderer(ModEntityType.TUTORIAL_CAR.get(), TutorialCarRenderer::new);
+        event.registerEntityRenderer(ModEntityType.TUTORIAL_ENTITY.get() , TutorialEntityRenderer::new);
+        event.registerEntityRenderer(ModEntityType.TUTORIAL_ZOMBIE.get(), TutorialZombieRenderer::new);
+        event.registerEntityRenderer(ModEntityType.TUTORIAL_WITCH.get(), TutorialWitchRenderer::new);
 
 
     }
@@ -65,6 +69,7 @@ public class ModEntityRenderers{
         event.registerLayerDefinition(TUTORIAL_HORSE_LAYER,  TutorialHorseModel::createBodyLayer);
         event.registerLayerDefinition(TUTORIAL_BOAT_LAYER,  TutorialBoatModel::createBodyModel);
         event.registerLayerDefinition(TUTORIAL_CAR_LAYER,  TutorialCarModel::createBodyLayer);
+        event.registerLayerDefinition(TUTORIAL_ENTITY_LAYER,  TutorialEntityModel::createBodyLayer);
         event.registerLayerDefinition(TUTORIAL_ZOMNBIE_LAYER,  TutorialZombieModel::createBodyLayer);
         event.registerLayerDefinition(TUTORIAL_WITCH_LAYER,  TutorialWitchModel::createBodyLayer);
     }

@@ -26,7 +26,6 @@ public class Strawberry extends Item {
                                                                                                                           // =20=1s         //1=2level      //1F =100%
                         .build())
                 );
-        this.setRegistryName("strawberry");
     }
 
     @Override

@@ -34,7 +34,6 @@ public class Zone extends Item {
                         .effect(new MobEffectInstance(MobEffects.REGENERATION,200,1),1F)
                         .build())
         );
-        this.setRegistryName("zone");
     }
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flags){

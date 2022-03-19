@@ -242,7 +242,7 @@ public class TutorialPig extends Animal implements ItemSteerable, Saddleable {
     }
 
     public TutorialPig getBreedOffspring(ServerLevel p_149001_, AgeableMob p_149002_) {
-        return ModEntityType.TUTORIAL_PIG.create(p_149001_);
+        return ModEntityType.TUTORIAL_PIG.get().create(p_149001_);
     }
 
     public boolean isFood(ItemStack p_29508_) {

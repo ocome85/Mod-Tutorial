@@ -14,8 +14,6 @@ import java.util.List;
 public class Tutorial_T2 extends Item {
     public Tutorial_T2() {
         super(new Properties().tab(TutorialMod.MOD_TAB));
-        this.setRegistryName("tutorial_t2");
-
     }
 
     @Override

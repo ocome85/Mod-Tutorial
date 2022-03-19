@@ -27,9 +27,10 @@ public class TutorialMod
 
     public TutorialMod() {
 
-                MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ModGenerate::ModGenerate);
-
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ModGenerate::ModGenerate);
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        ModEntityType.ENTITY_TYPES.register(eventBus);
+        ModItems.ITEMS.register(eventBus);
         ModSoundEvents.SOUNDS.register(eventBus);
         // Register the setup method for modloading
         eventBus.addListener(this::setup);
